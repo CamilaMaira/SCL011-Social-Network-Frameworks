@@ -8,6 +8,6 @@ const createUser = (
             state ={...state, user: action.payload}
         }
         return state;
-    }
+    };
 
 export default createUser;
