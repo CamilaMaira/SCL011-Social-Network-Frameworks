@@ -1,17 +1,38 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 // action 
-// import { createUser } from '../actions/signin'
+import { createUser }  from '../actions/signin';
 
 
 const Signin = () => {
     const [ email, setEmail ] = useState("");
     const [ password, setPassword ] = useState("");
+    //maneja las redirecciones
+    const [ routeRedirect, setRedirect ] = useState(false);
+    const dispatch = useDispatch();
 
-    const signIn = (e) => {
+    const createUserAction = (email, password) => dispatch(createUser(email, password));
+
+    const signIn = async(e) => {
         e.preventDefault();
-        console.log("user created")
+        // console.log("user created");
+
+        if(email !== "" & password !== "" ){
+            await createUserAction(email, password);
+            //setRedirect(true)
+        }else{
+            console.log("necesitas llenar los espacios vacios");
+        }
+    }
+
+    // if redirect is true nos redireccionar a la ruta mail, si es false pos no 
+    const redirectTo = routeRedirect;
+    if(redirectTo){
+        return (
+            <Redirect to="/" />
+        )
     }
 
 

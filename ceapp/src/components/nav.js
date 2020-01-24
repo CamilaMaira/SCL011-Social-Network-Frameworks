@@ -54,8 +54,6 @@ const Nav = (props) => {
     }
        
 
-
-
     return(
         <nav>
             <ul>
