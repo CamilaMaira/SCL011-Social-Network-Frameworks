@@ -56,6 +56,38 @@ class Firebase {
         })
     }
 
+
+    // add post 2 firebase
+
+    // parametro post es un objeto, vamos a manejar el upload con storageRef
+    // post.cover.name post object tiene un cover propiedad dentro y de ahi sacamos el name
+    // vamos a subir postCover con put, postCover es la referencia de lo que vamos a subir
+    // fileRef nos dice donde estamos en caso de querer eliminar un file
+
+    async createPost(post){
+        const storageRef = firebase.storage().ref();
+        const storageChild = storageRef.child(post.cover.name);
+        const postCover = await storageChild.put(post.cover);
+        const downloadURL = await storageChild.getDownloadURL(); // URL
+        const fileRef = postCover.ref.location.path; // actual path*
+
+        // objeto que vamos a enviar
+        let newPost = {
+            title: post.title,
+            content: post.content,
+            cover: downloadURL,
+            fileref: fileRef
+        }
+
+        const firebasePost = await firebase.firestore().collection("post").add(newPost).catch(err => {
+            console.log(err)
+        });
+
+        // este post tiene la respuesta de la creacion de un nuevo post
+        return firebasePost;
+
+    }
+
 }
 
 export default new Firebase();
