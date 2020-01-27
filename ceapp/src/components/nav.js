@@ -48,7 +48,6 @@ const Nav = (props) => {
                 <li><Link to="/login">Log In</Link></li>
             </React.Fragment>
 
-
         )
 
     }

@@ -5,13 +5,13 @@ import 'firebase/storage';
 
 
 const config = {
-    apiKey: "AIzaSyAKQ4AJj4kQ0mhJ7SNTDrSoIHx2LCzm_zI",
-    authDomain: "scl011-ceapp.firebaseapp.com",
-    databaseURL: "https://scl011-ceapp.firebaseio.com",
-    projectId: "scl011-ceapp",
-    storageBucket: "scl011-ceapp.appspot.com",
-    messagingSenderId: "784056641834",
-    appId: "1:784056641834:web:554987e8b4b4ffa11c5653"
+    apiKey: "AIzaSyCQ8EF3Tst7rhjO2x1FZzWKLe5Rls7rW3o",
+    authDomain: "ceapp-5e124.firebaseapp.com",
+    databaseURL: "https://ceapp-5e124.firebaseio.com",
+    projectId: "ceapp-5e124",
+    storageBucket: "ceapp-5e124.appspot.com",
+    messagingSenderId: "451980652087",
+    appId: "1:451980652087:web:33033dfe006499be3fd9b2"
 }
 
 class Firebase {
@@ -55,7 +55,7 @@ class Firebase {
             this.auth.onAuthStateChanged(resolve);
         })
     }
-
+  
 
     // add post 2 firebase
 
@@ -69,17 +69,16 @@ class Firebase {
         const storageChild = storageRef.child(post.cover.name);
         const postCover = await storageChild.put(post.cover);
         const downloadURL = await storageChild.getDownloadURL(); // URL
-        const fileRef = postCover.ref.location.path; // actual path*
+        const fileRef = postCover.ref.location.path; // actual path* 
 
         // objeto que vamos a enviar
         let newPost = {
-            title: post.title,
             content: post.content,
             cover: downloadURL,
             fileref: fileRef
         }
 
-        const firebasePost = await firebase.firestore().collection("post").add(newPost).catch(err => {
+        const firebasePost = await firebase.firestore().collection("posts").add(newPost).catch(err => {
             console.log(err)
         });
 
