@@ -7,12 +7,14 @@ import createUser from './signin';
 import logInUser from './login';
 import logOutUser from './logout';
 import createPost from './createPost';
+import getPosts from './getPosts';
 
 const reducers = combineReducers({
     signIn: createUser,
     logIn: logInUser,
     logOut: logOutUser,
     create: createPost,
+    posts: getPosts
 
 });
 

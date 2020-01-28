@@ -55,6 +55,29 @@ class Firebase {
             this.auth.onAuthStateChanged(resolve);
         })
     }
+
+    // fetch 
+
+    async getPosts(){
+        let postArray = [];
+        const post = await firebase.firestore().collection("posts").get();
+        post.forEach(doc => {
+            postArray.push({ id: doc.id, data: doc.data() });
+        })
+
+        return postArray;
+
+    }
+
+    // esta promesa tiene un metodo que retorna la informacion de data, const post tiene la promesa
+    // este post dentro tiene data
+
+    async getPost(postid){
+        const post = await firebase.firestore().collection("post").doc(postid).get(); // promise
+        const postData = post.data();
+        return postData;
+        
+    }
   
 
     // add post 2 firebase
@@ -85,6 +108,7 @@ class Firebase {
         // este post tiene la respuesta de la creacion de un nuevo post
         return firebasePost;
 
+     
     }
 
 }
