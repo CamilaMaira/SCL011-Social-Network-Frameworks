@@ -88,13 +88,18 @@ class Firebase {
     // fileRef nos dice donde estamos en caso de querer eliminar un file
 
     async createPost(post){
+        //TODO ESTO ES PARA LAS IMAGENES//
+
         const storageRef = firebase.storage().ref();
-        const storageChild = storageRef.child(post.cover.name);
+        // hijo dentro del storage
+        const storageChild = storageRef.child(post.cover.name)
+        //(post.cover ? post.cover.name:"0");
         const postCover = await storageChild.put(post.cover);
         const downloadURL = await storageChild.getDownloadURL(); // URL
-        const fileRef = postCover.ref.location.path; // actual path* 
+        const fileRef = postCover.ref.location.path; // actual path* */
 
         // objeto que vamos a enviar
+
         let newPost = {
             content: post.content,
             cover: downloadURL,
@@ -105,10 +110,70 @@ class Firebase {
             console.log(err)
         });
 
-        // este post tiene la respuesta de la creacion de un nuevo post
+        // firebasePost es la respuesta de la creacion de un nuevo post
+
         return firebasePost;
 
-     
+    }
+
+
+    // estas funciones van a estar dentro del component post
+
+    async updatePost(postid, postData){
+        if(postData["cover"]){
+            //referencia a storage
+            const storageRef = firebase.storage().ref();
+            // child dentro de storage
+            const storageChild = storageRef.child(postData.cover.name);
+            const postCover = await storageChild.put(postData.cover);
+            const downloadURL = await storageChild.getDownloadURL(); // URL
+            const fileRef = postCover.ref.location.path; // actual path* 
+
+            // borra la imagen antigua
+            await storageRef.child(postData["oldcover"]).delete().catch(err => {
+                console.log(err);
+            });
+            console.log("imagen borrada, ya no hay vuelta atras")
+
+            let updatePost = {
+                content: postData.content,
+                cover: downloadURL,
+                fileref: fileRef
+            }
+
+            //imagenes
+
+            const post = await firebase.firestore().collection("posts").doc(postid)
+            .set(updatePost, {merge:true}).catch(err => {console.log(err)});
+
+            console.log("¡felicitaciones! post actualizado");
+            return post;
+        } else{
+
+            // datos
+
+            const post = await firebase.firestore().collection("posts").doc(postid)
+            .set(postData, {merge:true}).catch(err => {console.log (err)});
+
+            console.log("¡felicitaciones! post actualizado");
+            return post;
+        }
+    }
+
+    async deletePost(postid, fileref){
+        const storageRef = firebase.storage().ref();
+        console.log("Ref to delete > "+fileref);
+        await storageRef.child(fileref).delete().catch(err => console.log(err));
+        console.log("imagen eliminada")
+
+        const post = await firebase.firestore().collection("posts").doc(postid)
+        .delete().catch(err => {
+            console.log(err);
+        });
+
+        console.log("post borrado");
+        return post;
+
     }
 
 }

@@ -37,7 +37,7 @@ const Nav = (props) => {
         buttons = (
             <React.Fragment>
                 <li>
-                <button className="logout" onClick={logout}>Logout</button>
+                <button className="logout" onClick={logout}>Salir</button>
                 </li>
             </React.Fragment>
         )
@@ -52,11 +52,10 @@ const Nav = (props) => {
 
     }
        
-
     return(
         <nav>
             <ul>
-            <li><Link to="/">React test</Link></li>
+            <li><Link to="/">CEAPP</Link></li>
 
             </ul>
             <ul>

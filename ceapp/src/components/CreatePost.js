@@ -6,7 +6,6 @@ import { createPost } from '../actions/createPost'
 
 const Create = () => {
 
-    // const [ title, setTitle ] = useState("");
     const [ content, setContent ] = useState("");
     const [ cover, setCover ] = useState("");
     const [ routeRedirect, setRedirect ] = useState("");
@@ -16,12 +15,8 @@ const Create = () => {
     const createPostAction = (post) => dispatch(createPost(post));
     //usando la data pasamos los "post" a traves de dispatch a la accion "createPost"
 
-    const redirect = routeRedirect;
-    if(redirect){
-        return <Redirect to="/" />
-    }
-
-    const addPost = async (e) => {
+        
+        const addPost = async (e) => {
         e.preventDefault();
         setLoading(true);
         let post = {
@@ -33,6 +28,11 @@ const Create = () => {
         setLoading(false);
         setRedirect(true);
 
+    }
+
+    const redirect = routeRedirect;
+    if(redirect){
+        return <Redirect to="/" />
     }
 
 

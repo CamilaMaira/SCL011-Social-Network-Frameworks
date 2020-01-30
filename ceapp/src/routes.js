@@ -7,7 +7,8 @@ import { Switch, Route } from 'react-router-dom';
 import Main from './components/Main';
 import Signin from './components/SignIn';
 import Login from './components/Login';
-import Create from './components/CreatePost'
+import Create from './components/CreatePost';
+import Post from './components/Post'; 
 
 const Routes = () => (
     <Switch>
@@ -15,6 +16,7 @@ const Routes = () => (
         <Route exact path ="/signin" component ={Signin} />
         <Route exact path ="/login" component ={Login} />
         <Route exact path ="/create" component ={Create} />
+        <Route exact path ="/post/:id" component ={Post} />
     </Switch>
 )
  
